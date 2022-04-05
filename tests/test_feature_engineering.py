@@ -1,6 +1,6 @@
 # Databricks notebook source
-# install nutter in cluster if you want to trigger tests from command line
-%pip install -U nutter chispa
+# install nutter (and all necessary dependencies) on the cluster if you want to trigger tests from the command line
+%pip install -r ../requirements.txt
 
 # COMMAND ----------
 
