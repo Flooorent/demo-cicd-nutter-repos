@@ -1,3 +1,13 @@
+# Grab variables from the specific variable group and
+# determine sourceBranchName (avoids SourchBranchName=merge
+# for PR)
+variables:
+  - name: 'branchName'
+    ${{ if startsWith(variables['Build.SourceBranch'], 'refs/heads/') }}:
+      value: $[ replace(variables['Build.SourceBranch'], 'refs/heads/', '') ]
+    ${{ if startsWith(variables['Build.SourceBranch'], 'refs/pull/') }}:
+      value: $[ replace(variables['System.PullRequest.SourceBranch'], 'refs/heads/', '') ]
+      
 trigger:
   batch: true
   branches:
@@ -38,7 +48,7 @@ stages:
      
     - script: |
         echo "Checking out the $(branchName) branch"
-        databricks repos update --path $(STAGING_DIRECTORY) --branch "$(Build.SourceBranchName)"
+        databricks repos update --path $(STAGING_DIRECTORY) --branch "$(branchName)"
       env:
         DATABRICKS_HOST: $(STAGING_DATABRICKS_HOST)
         DATABRICKS_TOKEN: $(STAGING_DATABRICKS_TOKEN)
