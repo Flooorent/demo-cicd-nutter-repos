@@ -38,7 +38,7 @@ stages:
      
     - script: |
         echo "Checking out the $(branchName) branch"
-        databricks repos update --path $(STAGING_DIRECTORY) --branch "$(branchName)"
+        databricks repos update --path $(STAGING_DIRECTORY) --branch "$(Build.SourceBranchName)"
       env:
         DATABRICKS_HOST: $(STAGING_DATABRICKS_HOST)
         DATABRICKS_TOKEN: $(STAGING_DATABRICKS_TOKEN)
